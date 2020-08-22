@@ -1,0 +1,125 @@
+import QtQuick 2.14
+import QtQuick.Controls 2.5
+import QtQuick.Shapes 1.14
+import QtQuick.Layouts 1.3
+
+Item{
+    property alias theWidth: theLayout.mWidth
+    property alias theHeight: theLayout.mHeight
+
+    ColumnLayout {
+
+        property int mWidth: 700
+        property int mHeight: 60
+
+        id:theLayout
+        width: mWidth; height: mHeight
+        spacing: 10
+
+        Rectangle{
+            width: parent.width-40
+            height: parent.height/4
+            Layout.alignment: Qt.AlignHCenter
+            color: "#55BCC9"
+
+
+            Rectangle{
+                id:firstValueWrapRectangle
+                width: parent.height*2.1; height:width
+                color: "transparent"
+                x:rangeSlider.first.value*parent.width - firstValueWrapRectangle.width/2
+
+                Rectangle{
+                    id:firstValueRectangle
+                    width: parent.width ; height:parent.height* (3.2/4)
+                    color: "#3b3b3c"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    radius:width/10
+
+                    Text {
+                        id: firstValueRectangleText
+                        color: "white"
+                        text: String(rangeSlider.first.value).substring(0,4)
+                        font.pointSize: parent.width/2
+                        anchors.centerIn: parent
+                    }
+                }
+
+                Canvas{
+                    id:firstValueTriangle
+                    width: parent.width; height: parent.height
+                    onPaint: {
+                        var context = getContext("2d")
+                        context.beginPath();
+                        context.moveTo(width/2, height);
+                        context.lineTo(width/2+width/4, height-height/4);
+                        context.lineTo(width/2-width/4, height-height/4);
+                        context.closePath();
+
+                        // the fill color
+                        context.fillStyle = firstValueRectangle.color;
+                        context.fill();
+                    }
+                }
+            }
+
+            Rectangle{
+                id:secondValueWrapRectangle
+                width: parent.height*2.1; height:width
+                color: "transparent"
+                x:rangeSlider.second.value*parent.width - secondValueRectangle.width/2
+
+
+                Rectangle{
+                    id:secondValueRectangle
+                    width: parent.width ; height:parent.height* (3.2/4)
+                    color: "#3b3b3c"
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    radius:width/10
+
+
+                    Text {
+                        id: secondValueRectangleText
+                        color: "white"
+                        text: String(rangeSlider.second.value).substring(0,4)
+                        font.pointSize: parent.width/2
+                        anchors.centerIn: parent
+                    }
+                }
+                Canvas{
+                    id:secondValueTriangle
+                    width: parent.width; height: parent.height
+                    onPaint: {
+                        var context = getContext("2d")
+                        context.beginPath();
+                        context.moveTo(width/2, height);
+                        context.lineTo(width/2+width/4, height-height/4);
+                        context.lineTo(width/2-width/4, height-height/4);
+                        context.closePath();
+
+                        // the fill color
+                        context.fillStyle = secondValueRectangle.color;
+                        context.fill();
+                    }
+                }
+            }
+        }
+
+        RangeSlider {
+            id: rangeSlider
+            width: parent.width
+            second.value: 0.75
+            first.value: 0.25
+            Layout.fillWidth: true
+            height: 20
+        }
+    }
+}
+
+
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
