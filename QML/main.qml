@@ -12,6 +12,7 @@ ApplicationWindow {
     maximumWidth: 1280
     minimumHeight: 800
     minimumWidth: 1280
+    visibility : "FullScreen"
     StackView {
 
         //Functions
