@@ -8,19 +8,24 @@ ApplicationWindow {
     height: 800
     visible: true
     title: qsTr("AirSim")
-    maximumHeight: 800
-    maximumWidth: 1280
     minimumHeight: 800
     minimumWidth: 1280
-    visibility : "FullScreen"
+    //visibility : "FullScreen"``
+
+    Connections{
+        id:connect
+        target: socketFromPython
+    }
+
     StackView {
 
-        //Functions
-
-        property string user: "None"
+        property var socketFromPy: null
         id: stackView
         initialItem: "page_Login.qml"
         anchors.fill: parent
     }
-}
 
+    Component.onCompleted: {
+        console.log(socketFromPython)
+    }
+}

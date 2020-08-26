@@ -46,7 +46,7 @@ Page {
 
         Button{
 
-            Connections{
+            Connections{    
                 target: socketFromPython
             }
 
