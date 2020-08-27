@@ -20,13 +20,21 @@ class Socket(QObject):
         self.initial = None
         self.update = None
         self.initiated = False
+        self.statusVariable = ""
 
         sio.on("connect", self.connect)
         sio.on("disconnect", self.disconnect)
         sio.on("data", self.receivingData)
         sio.on("initial", self.receivingInitial)
 
-    SignalToQML = pyqtSignal(str, arguments=["start"])
+    signalToQML_Strings = pyqtSignal(str, arguments=["statusFunction"])
+
+    @pyqtSlot(str)
+    def statusFunction(self):
+        """
+        Returns the initial
+        """
+        self.signalToQML_Strings.emit(self.statusVariable)
 
     @pyqtSlot(str)
     def start(self, password):
@@ -35,10 +43,8 @@ class Socket(QObject):
         """
         try:
             self.userPassword = password
-            print(self.userPassword)
             sio.connect("https://airsim.herokuapp.com")
         except Exception as e:
-            sio.disconnect()
             print(f"{type(e)}, {e}")
             print("Error connecting to the server")
 
@@ -49,6 +55,8 @@ class Socket(QObject):
         :return: None.
         """
         sio.emit("join", {"password": f"{self.userPassword}"})
+        self.signalToQML_Strings.emit("Sending the join request")
+        self.statusVariable = "Sending the join request"
 
 
     @sio.on("connect")
@@ -59,6 +67,8 @@ class Socket(QObject):
         """
         try:
             print("Connected")
+            self.signalToQML_Strings.emit("Connected to the server")
+            self.statusVariable = "Connected to the server"
             self.join()
         except Exception as e:
             print(e)
@@ -73,10 +83,11 @@ class Socket(QObject):
         """
         print("Disconnected")
         if self.initiated:
-            self.SignalToQML.emit("Connection lost")
+            self.signalToQML_Strings.emit("Connection lost")
+            self.statusVariable = "Connection lost"
         else:
-            self.SignalToQML.emit("Request denied by the server")
-
+            self.signalToQML_Strings.emit("Request denied by the server")
+            self.statusVariable = "Request denied by the server"
 
 
     @sio.on("initial")
@@ -90,6 +101,8 @@ class Socket(QObject):
             self.initial = data
             self.initiated = True
             print(json.dumps(data, indent=2))
+            self.signalToQML_Strings.emit("Received initial files")
+            self.statusVariable = "Received initial files"
         except Exception as e:
             print("Error when initiating")
             print(e)

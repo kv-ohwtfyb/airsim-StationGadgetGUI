@@ -24,8 +24,4 @@ ApplicationWindow {
         initialItem: "page_Login.qml"
         anchors.fill: parent
     }
-
-    Component.onCompleted: {
-        console.log(socketFromPython)
-    }
 }

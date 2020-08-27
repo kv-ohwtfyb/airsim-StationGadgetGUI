@@ -48,6 +48,13 @@ Page {
 
             Connections{
                 target: socketFromPython
+
+                onSignalToQML_Strings:{
+                    statusText.text = statusFunction
+                    if (statusFunction == "Received initial files" || statusFunction == "Request denied by the server") {
+                        busyIndicatorId.running = false
+                    }
+                }
             }
 
             id:loginButton
@@ -64,9 +71,8 @@ Page {
             }
             onClicked: {
                 socketFromPython.start(thePassInput.text)
+                busyIndicatorId.running = true
             }
-
-
         }
 
         BusyIndicator{
@@ -75,6 +81,17 @@ Page {
             anchors.top: loginButton.bottom
             anchors.topMargin: 50
             running: false
+        }
+
+        Text {
+            id: statusText
+            anchors.top: busyIndicatorId.bottom
+            anchors.topMargin: 30
+            text: qsTr("")
+            font.pointSize: 14
+            font.family: "Helvetica Neue"
+            color: "white"
+            anchors.horizontalCenter: parent.horizontalCenter
         }
     }
 }
