@@ -6,8 +6,25 @@ Rectangle {
     id:bigBoss
 
     property int value: 30
+    property int captiveMax: 100
+    property int captiveMin: 0
+    property int cautionMax: 40
+    property int cautionMin: 20
+
     width : 585
     height: 298
+
+    //Signal Handlers
+
+    //When the value changes
+    onValueChanged: {
+        if (value < cautionMin || value > cautionMax ) {
+            gradientChangeableColor.color = "#FFC400"
+        } else{
+            gradientChangeableColor.color = "#3feee6"
+        }
+
+    }
 
     Rectangle {
         id: theHeaderRectangle
@@ -75,8 +92,9 @@ Rectangle {
                     }
 
                     GradientStop {
+                        id:gradientChangeableColor
                         position: 1
-                        color: "#3feee6"
+                        color: (value < cautionMin || value > cautionMax ) ? "#FFC400" : "#3feee6"
                     }
                 }
 
@@ -97,6 +115,10 @@ Rectangle {
 
                 CustomGauge{
                     value: bigBoss.value
+                    captiveMax: bigBoss.captiveMax
+                    captiveMin: bigBoss.captiveMin
+                    cautionMax: bigBoss.cautionMax
+                    cautionMin: bigBoss.cautionMin
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
                 }

@@ -31,14 +31,14 @@ Page{
             Image {
                 id: homeIcon
                 width: 25; height: 25
-                source: "/new/prefix1/HomeIcon.png"
+                source: "HomeIcon.png"
                 anchors.left: parent.left
                 anchors.leftMargin: 44
                 anchors.verticalCenter: parent.verticalCenter
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        //page.parent.replace("qrc:/page_MainMenu.qml")
+                        page.parent.replace("page_MainMenu.qml")
                     }
                 }
             }
@@ -68,22 +68,41 @@ Page{
     }
 
     ListModel{
-        // This is kinda like a DB, but not actually
         id:model
         ListElement{
             customNumber:12
+            captiveMinimum:-1
+            captiveMaximum:100
+            cautionMinimum:35
+            cautionMaximum:70
         }
         ListElement{
             customNumber:-1
+            captiveMinimum:-100
+            captiveMaximum:100
+            cautionMinimum:0
+            cautionMaximum:70
         }
         ListElement{
-            customNumber:87
+            customNumber:30
+            captiveMinimum:00
+            captiveMaximum:80
+            cautionMinimum:20
+            cautionMaximum:40
         }
         ListElement{
-            customNumber:34
+            customNumber:0.2
+            captiveMinimum:0.57
+            captiveMaximum:0.89
+            cautionMinimum:0
+            cautionMaximum:0.4
         }
         ListElement{
             customNumber:23
+            captiveMinimum:-100
+            captiveMaximum:100
+            cautionMinimum:0
+            cautionMaximum:70
         }
     }
 
@@ -104,23 +123,21 @@ Page{
         Grid{
             id:theWidgetsGridView
             anchors.horizontalCenter: parent.horizontalCenter
-
             columns: 2
             spacing: 20
-
 
             Repeater{
                 model: model
                 delegate: RectangleDisplay{
                     id:rectDisp
                     value:customNumber
+                    captiveMax: captiveMaximum
+                    captiveMin: captiveMinimum
+                    cautionMax: cautionMaximum
+                    cautionMin: cautionMinimum
                 }
             }
         }
-    }
-
-    Component.onCompleted: {
-        console.log(page.parent.user)
     }
 }
 

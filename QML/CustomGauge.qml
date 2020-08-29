@@ -4,7 +4,12 @@ import QtQuick.Shapes 1.14
 
 Shape {
 
-    property int value: 30
+    property int value: 23
+    property int captiveMax: 100
+    property int captiveMin: -100
+    property int cautionMax: 70
+    property int cautionMin: 0
+
     id:shape
     width: 200
     height: width
@@ -40,7 +45,7 @@ Shape {
             centerX: shape.width/2; centerY: shape.width/2
             radiusX: shape.width/2-theMainPath.strokeWidth; radiusY: radiusX
             startAngle: -225
-            sweepAngle: 90
+            sweepAngle: (cautionMin - captiveMin) * (270/(captiveMax-captiveMin))
         }
     }
 
@@ -55,10 +60,11 @@ Shape {
             id:theGreenPathArcItem
             centerX: shape.width/2; centerY: shape.width/2
             radiusX: shape.width/2-theMainPath.strokeWidth; radiusY: radiusX
-            startAngle: -135
-            sweepAngle: 90
+            startAngle: theYellow1PathArcItem.startAngle + theYellow1PathArcItem.sweepAngle
+            sweepAngle: (cautionMax - cautionMin) * (270 / (captiveMax-captiveMin))
         }
     }
+
 
     ShapePath {
         id:theYellow2Path
@@ -71,10 +77,11 @@ Shape {
             id:theYellow2PathArcItem
             centerX: shape.width/2; centerY: shape.width/2
             radiusX: shape.width/2-theMainPath.strokeWidth; radiusY: radiusX
-            startAngle: -45
-            sweepAngle: 90
+            startAngle: theGreenPathArcItem.startAngle + theGreenPathArcItem.sweepAngle
+            sweepAngle: (captiveMax - cautionMax) * (270 / (captiveMax-captiveMin))
         }
     }
+
 
     Text {
         id: element
@@ -88,6 +95,7 @@ Shape {
     Item {
         id: itemRound
         anchors.fill: parent
+        rotation: 225 + ((value-captiveMin) * (270 / (captiveMax-captiveMin)))
 
         Rectangle{
             y: width*(2.5/4)
@@ -96,6 +104,7 @@ Shape {
             radius: width/2
             anchors.horizontalCenter: parent.horizontalCenter
             color: "black"
+
         }
     }
 }

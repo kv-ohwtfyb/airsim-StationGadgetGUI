@@ -54,6 +54,9 @@ Page {
                     if (statusFunction == "Received initial files" || statusFunction == "Request denied by the server") {
                         busyIndicatorId.running = false
                     }
+                    if (statusFunction == "Received initial files"){
+                        page.parent.push("page_DataDisplay.qml")
+                    }
                 }
             }
 

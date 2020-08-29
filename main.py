@@ -54,7 +54,7 @@ class Socket(QObject):
         When asking to join a room in the server
         :return: None.
         """
-        sio.emit("join", {"password": f"{self.userPassword}"})
+        sio.emit("join", {"password": f"{self.userPassword}", "room":"Kitchen"})
         self.signalToQML_Strings.emit("Sending the join request")
         self.statusVariable = "Sending the join request"
 

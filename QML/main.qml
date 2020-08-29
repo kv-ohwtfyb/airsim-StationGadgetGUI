@@ -10,7 +10,7 @@ ApplicationWindow {
     title: qsTr("AirSim")
     minimumHeight: 800
     minimumWidth: 1280
-    //visibility : "FullScreen"``
+    visibility : "FullScreen"``
 
     Connections{
         id:connect
@@ -19,7 +19,6 @@ ApplicationWindow {
 
     StackView {
 
-        property var socketFromPy: null
         id: stackView
         initialItem: "page_Login.qml"
         anchors.fill: parent
