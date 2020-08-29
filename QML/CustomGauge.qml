@@ -104,7 +104,6 @@ Shape {
             radius: width/2
             anchors.horizontalCenter: parent.horizontalCenter
             color: "black"
-
         }
     }
 }
