@@ -12,6 +12,7 @@ Rectangle {
     property int cautionMax: 0
     property int cautionMin: 0
     property string station: "value"
+    property string unit: "°C"
 
     width : 585
     height: 298
@@ -140,12 +141,11 @@ Rectangle {
                     }
                 }
 
+                //This text has to be turned into a Row Layout that way the text can always fillthe parent width
                 Text {
                     id: info
-                    width: 549
                     height: 15
-                    text: qsTr("Status :  Active          Caution Range     :    20  - 40 °C      Captive Capacity :  -10 - 100 °C         Station Id :  0sa21ed
-        ")
+                    text: qsTr("Status : Active         Caution Range     :  "+cautionMin+"-"+cautionMax+unit+" "+"Captive Capacity     :  " + captiveMin+"-"+captiveMax+unit+"        Station Id : " + station)
                     anchors.bottomMargin: 10
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter

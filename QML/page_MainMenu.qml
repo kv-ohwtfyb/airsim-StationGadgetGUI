@@ -37,7 +37,7 @@ Page {
                     color: "#3FEEE6"
                 }
                 onClicked: {
-                    //page.parent.replace("qrc:/page_DataDisplay.qml")
+                    page.parent.replace("page_DataDisplay.qml")
                 }
             }
 
@@ -52,7 +52,7 @@ Page {
                     color: "#3FEEE6"
                 }
                 onClicked: {
-                    //page.parent.replace("qrc:/page_Alerts.qml")
+                    page.parent.replace("page_Alerts.qml")
                 }
             }
 
@@ -67,7 +67,7 @@ Page {
                     color: "#3FEEE6"
                 }
                 onClicked: {
-                    //page.parent.replace("qrc:/page_Configurations.qml")
+                    page.parent.replace("page_Configurations.qml")
                 }
             }
         }

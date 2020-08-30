@@ -110,7 +110,8 @@ Page{
                     captiveMin: captiveMinimum
                     cautionMax: cautionMaximum
                     cautionMin: cautionMinimum
-                    station: station
+                    station: stationId
+                    unit:SensorUnit
                 }
             }
         }
@@ -128,12 +129,14 @@ Page{
             page.initialJSON.stations.forEach(function(station){
 
                 station.sensors.forEach(function(sensor){
+
                     sensorModel.append({"sensorTitle": sensor.id,
                                         "captiveMinimum": sensor["Captive Range"].split("-")[0],
                                         "captiveMaximum": sensor["Captive Range"].split("-")[1],
                                         "cautionMinimum": sensor["Caution Range"].split("-")[0],
                                         "cautionMaximum": sensor["Caution Range"].split("-")[1],
-                                        "station":station.id
+                                        "stationId":station.id,
+                                        "SensorUnit":sensor.Unit
                                        })
                 })
             })

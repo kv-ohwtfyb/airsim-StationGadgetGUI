@@ -10,6 +10,10 @@ sio = socketio.Client()
 class Socket(QObject):
     """docstring for ."""
 
+    signalToQML_Data = pyqtSignal(str, arguments=["dataFecthFunction"])
+    signalToQML_Strings = pyqtSignal(str, arguments=["statusFunction"])
+    signalToQML_Initial = pyqtSignal(str, arguments = ["initialFunction"])
+
     def __init__(self, socket):
         """
         Initiator.
@@ -25,20 +29,28 @@ class Socket(QObject):
         self.initiated = False
         #This variabe contains the status of the connection to the database
         self.statusVariable = ""
+        #This variable contains the latest station datas sent from the server
+        self.latestData = ""
 
         sio.on("connect", self.connect)
         sio.on("disconnect", self.disconnect)
         sio.on("data", self.receivingData)
         sio.on("initial", self.receivingInitial)
 
-    signalToQML_Strings = pyqtSignal(str, arguments=["statusFunction"])
-    signalToQML_Initial = pyqtSignal(str, arguments = ["initialFunction"])
+    @pyqtSlot()
+    def dataFecthFunction(self):
+        """
+        Emits the data from server, which comes from the stations straight to QML.
+        The data is sent to through.
+        :return: None.
+        """
+        self.signalToQML_Data.emit(self.latestData)
 
     @pyqtSlot()
     def initialFunction(self):
         """
         Emits the initial json file in a string format to QML.
-        :return:
+        :return: None.
         """
         self.signalToQML_Initial.emit(self.initialJSON)
 
@@ -135,7 +147,12 @@ class Socket(QObject):
         :param data: JSON file sent by the server.
         :return: None.
         """
-        print(json.dumps(data, indent=2))
+        try:
+            print(json.dumps(data, indent=2))
+            
+        except Exception as e:
+            print("Error receiving Data")
+            print(e)
 
 
 def runQML(socket):
