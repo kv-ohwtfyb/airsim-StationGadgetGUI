@@ -1,4 +1,4 @@
-from PyQt5.QtQml import QQmlApplicationEngine
+from PyQt5.QtQml import QQmlApplicationEngine, QJSValue
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, QVariant
 import sys
@@ -16,10 +16,14 @@ class Socket(QObject):
         :param socket : A socketio client object.
         """
         QObject.__init__(self)
+
+        #The password of the current user
         self.userPassword = None
-        self.initial = None
-        self.update = None
+        #Contains the initial JSON file sent by the server
+        self.initialJSON = None
+        #True if the user was granted access to the user, else False
         self.initiated = False
+        #This variabe contains the status of the connection to the database
         self.statusVariable = ""
 
         sio.on("connect", self.connect)
@@ -28,11 +32,20 @@ class Socket(QObject):
         sio.on("initial", self.receivingInitial)
 
     signalToQML_Strings = pyqtSignal(str, arguments=["statusFunction"])
+    signalToQML_Initial = pyqtSignal(str, arguments = ["initialFunction"])
+
+    @pyqtSlot()
+    def initialFunction(self):
+        """
+        Emits the initial json file in a string format to QML.
+        :return:
+        """
+        self.signalToQML_Initial.emit(self.initialJSON)
 
     @pyqtSlot(str)
     def statusFunction(self):
         """
-        Returns the initial
+        Emits the status of the connection to the server to QML
         """
         self.signalToQML_Strings.emit(self.statusVariable)
 
@@ -98,10 +111,11 @@ class Socket(QObject):
         :return: None.
         """
         try:
-            self.initial = data
+            self.initialJSON = json.dumps(data)
             self.initiated = True
             print(json.dumps(data, indent=2))
             self.signalToQML_Strings.emit("Received initial files")
+            self.signalToQML_Initial.emit(self.initialJSON)
             self.statusVariable = "Received initial files"
         except Exception as e:
             print("Error when initiating")

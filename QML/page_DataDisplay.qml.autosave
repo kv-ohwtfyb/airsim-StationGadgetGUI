@@ -5,7 +5,8 @@ import QtQml 2.0
 
 Page{
     id : page
-
+    
+    property var name: value
     Rectangle{
         id:pageTitle
         width: parent.width
@@ -148,7 +149,8 @@ Page{
         }
     }
     Component.onCompleted: {
-         socketFromPython.initialFunction()
+        socketFromPython.initialFunction()
+        
     }
 }
 
