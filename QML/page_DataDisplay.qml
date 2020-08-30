@@ -5,7 +5,7 @@ import QtQml 2.0
 
 Page{
     id : page
-
+    property var initialJSON: null
     Rectangle{
         id:pageTitle
         width: parent.width
@@ -18,7 +18,7 @@ Page{
             anchors.verticalCenter: parent.verticalCenter
 
             Text {
-                id:text1
+                id:roomTitle
                 text: qsTr("Room 01")
                 horizontalAlignment: Text.AlignHCenter
                 font.pointSize: 20
@@ -68,42 +68,17 @@ Page{
     }
 
     ListModel{
-        id:model
+        id:sensorModel
+        /*
         ListElement{
+            sensorTitle:"Temperature"
             customNumber:12
             captiveMinimum:-1
             captiveMaximum:100
             cautionMinimum:35
             cautionMaximum:70
-        }
-        ListElement{
-            customNumber:-1
-            captiveMinimum:-100
-            captiveMaximum:100
-            cautionMinimum:0
-            cautionMaximum:70
-        }
-        ListElement{
-            customNumber:30
-            captiveMinimum:00
-            captiveMaximum:80
-            cautionMinimum:20
-            cautionMaximum:40
-        }
-        ListElement{
-            customNumber:0.2
-            captiveMinimum:0.57
-            captiveMaximum:0.89
-            cautionMinimum:0
-            cautionMaximum:0.4
-        }
-        ListElement{
-            customNumber:23
-            captiveMinimum:-100
-            captiveMaximum:100
-            cautionMinimum:0
-            cautionMaximum:70
-        }
+            station:"StationId"
+        } */
     }
 
     Flickable{
@@ -127,14 +102,15 @@ Page{
             spacing: 20
 
             Repeater{
-                model: model
+                model: sensorModel
                 delegate: RectangleDisplay{
-                    id:rectDisp
                     value:customNumber
+                    title:sensorTitle
                     captiveMax: captiveMaximum
                     captiveMin: captiveMinimum
                     cautionMax: cautionMaximum
                     cautionMin: cautionMinimum
+                    station: station
                 }
             }
         }
@@ -144,11 +120,29 @@ Page{
         target: socketFromPython
 
         onSignalToQML_Initial:{
-            console.log(initialFunction)
+            page.initialJSON = JSON.parse(initialFunction)
+            roomTitle.text = page.initialJSON.id
+
+            sensorModel.clear()
+
+            page.initialJSON.stations.forEach(function(station){
+
+                station.sensors.forEach(function(sensor){
+                    sensorModel.append({"sensorTitle": sensor.id,
+                                        "captiveMinimum": sensor["Captive Range"].split("-")[0],
+                                        "captiveMaximum": sensor["Captive Range"].split("-")[1],
+                                        "cautionMinimum": sensor["Caution Range"].split("-")[0],
+                                        "cautionMaximum": sensor["Caution Range"].split("-")[1],
+                                        "station":station.id
+                                       })
+                })
+            })
+
         }
     }
     Component.onCompleted: {
-         socketFromPython.initialFunction()
+        socketFromPython.initialFunction()
+
     }
 }
 

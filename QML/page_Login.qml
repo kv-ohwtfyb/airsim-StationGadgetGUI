@@ -51,7 +51,7 @@ Page {
 
                 onSignalToQML_Strings:{
                     statusText.text = statusFunction
-                    if (statusFunction == "Received initial files" || statusFunction == "Request denied by the server") {
+                    if (statusFunction == "Error" || statusFunction == "Request denied by the server") {
                         busyIndicatorId.running = false
                     }
                     if (statusFunction == "Received initial files"){

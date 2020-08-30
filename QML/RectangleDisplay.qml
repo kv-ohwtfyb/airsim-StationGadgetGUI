@@ -5,11 +5,13 @@ import QtQuick.Layouts 1.3
 Rectangle {
     id:bigBoss
 
-    property int value: 30
-    property int captiveMax: 100
+    property string title: "Sensor"
+    property int value: 00
+    property int captiveMax: 0
     property int captiveMin: 0
-    property int cautionMax: 40
-    property int cautionMin: 20
+    property int cautionMax: 0
+    property int cautionMin: 0
+    property string station: "value"
 
     width : 585
     height: 298
@@ -23,7 +25,6 @@ Rectangle {
         } else{
             gradientChangeableColor.color = "#3feee6"
         }
-
     }
 
     Rectangle {
@@ -34,9 +35,8 @@ Rectangle {
 
         Text {
             id: sensorTitle
-            width: 177
             height: 18
-            text: qsTr("Temperature - The right Corner")
+            text: title
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: 12
@@ -48,12 +48,11 @@ Rectangle {
             height: 11
             color: "#00ff4e"
             radius: 5
-            anchors.left: sensorTitle.right
-            anchors.leftMargin: 120
+            anchors.left: theLastActiveTime.left
+            anchors.leftMargin: -20
             border.width: 0
             anchors.verticalCenterOffset: 0
             anchors.verticalCenter: parent.verticalCenter
-            z: 0
         }
 
         Text {
@@ -63,8 +62,8 @@ Rectangle {
             color: "#00ff4e"
             text: qsTr("12:10")
             anchors.verticalCenter: parent.verticalCenter
-            anchors.left: activityCircle.right
-            anchors.leftMargin: 10
+            anchors.right: theHeaderRectangle.right
+            anchors.rightMargin: 20
             font.pixelSize: 12
         }
     }

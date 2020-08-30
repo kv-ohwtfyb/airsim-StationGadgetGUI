@@ -60,6 +60,8 @@ class Socket(QObject):
         except Exception as e:
             print(f"{type(e)}, {e}")
             print("Error connecting to the server")
+            self.statusVariable="Error"
+            self.signalToQML_Strings.emit("Error")
 
 
     def join(self):
@@ -67,7 +69,7 @@ class Socket(QObject):
         When asking to join a room in the server
         :return: None.
         """
-        sio.emit("join", {"password": f"{self.userPassword}", "room":"Kitchen"})
+        sio.emit("join", {"password": f"{self.userPassword}", "room":"Room 01"})
         self.signalToQML_Strings.emit("Sending the join request")
         self.statusVariable = "Sending the join request"
 
@@ -86,6 +88,8 @@ class Socket(QObject):
         except Exception as e:
             print(e)
             print("Error while connecting to the server")
+            self.statusVariable="Error"
+            self.signalToQML_Strings.emit("Error")
 
 
     @sio.on("disconnect")
@@ -120,6 +124,8 @@ class Socket(QObject):
         except Exception as e:
             print("Error when initiating")
             print(e)
+            self.statusVariable="Error"
+            self.signalToQML_Strings.emit("Error")
 
 
     @sio.on("data")
