@@ -13,8 +13,8 @@ Page{
 
     function findTheElement(sensorId, stationId){
         for(var i = 0; i < sensorModel.count; ++i){
-                if (sensorModel.get(i).sensorTitle===sensorId && sensorModel.get(i).station){
-                    return sensorModel.get(i)
+                if (sensorModel.get(i).sensorTitle===sensorId && sensorModel.get(i).stationId){
+                    return i
                 }
             }
         return null
@@ -92,7 +92,7 @@ Page{
             captiveMaximum:100
             cautionMinimum:35
             cautionMaximum:70
-            station:"StationId"
+            stationId:"StationId"
         } */
     }
 
@@ -117,6 +117,7 @@ Page{
             spacing: 20
 
             Repeater{
+                id:theRepeater
                 model: sensorModel
                 delegate: RectangleDisplay{
                     value:customNumber
@@ -148,11 +149,11 @@ Page{
                                         "cautionMinimum": sensor["Caution Range"].split("-")[0],
                                         "cautionMaximum": sensor["Caution Range"].split("-")[1],
                                         "stationId":station.id,
-                                        "SensorUnit":sensor.Unit
+                                        "SensorUnit":sensor.Unit,
+                                        "customNumber": parseFloat(sensor["Captive Range"].split("-")[0])
                                        })
                 })
             })
-
         }
 
         onSignalToQML_Data:{
@@ -160,10 +161,9 @@ Page{
             const data = JSON.parse(dataFecthFunction);
             if (data.room===roomTitle.text){
                 data.sensors.forEach(function(sensor){
-                    const element = findTheElement(sensor.id, data.stationId)
-                    console.log(element)
-                    if (element){
-                        console.log("Reached HERREEEEEEEE")
+                    const elementNumber = findTheElement(sensor.id, data.stationId)
+                    if (elementNumber !== null){
+                        theRepeater.itemAt(elementNumber).value = sensor.data
                     }
                 })
             }
@@ -171,7 +171,6 @@ Page{
     }
     Component.onCompleted: {
         socketFromPython.initialFunction()
-
     }
 }
 

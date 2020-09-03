@@ -3,14 +3,18 @@ import QtQuick.Controls 2.5
 import QtQuick.Shapes 1.14
 
 Shape {
-
-    property int value: 23
+    id:shape
+    property int value: 30
     property int captiveMax: 100
     property int captiveMin: -100
     property int cautionMax: 70
-    property int cautionMin: 0
+    property int cautionMin: 0    
 
-    id:shape
+    onValueChanged: {
+        theRoundBallAnimation.to = 225 + ((shape.value-captiveMin) * (270 / (shape.captiveMax-shape.captiveMin)))
+        theRoundBallAnimation.start()
+    }
+
     width: 200
     height: width
 
@@ -65,7 +69,6 @@ Shape {
         }
     }
 
-
     ShapePath {
         id:theYellow2Path
         fillColor: "transparent"
@@ -82,28 +85,35 @@ Shape {
         }
     }
 
-
     Text {
         id: element
         text: value
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         font.bold: true
-        font.pixelSize: parent.width/2.5
+        font.pixelSize: Math.ceil(parent.width/(1.25 * value.toString().length))
     }
 
     Item {
         id: itemRound
         anchors.fill: parent
-        rotation: 225 + ((value-captiveMin) * (270 / (captiveMax-captiveMin)))
+        rotation: 225
 
         Rectangle{
+            id:ballRound
             y: width*(2.5/4)
             width: shape.width/11
             height: width
             radius: width/2
             anchors.horizontalCenter: parent.horizontalCenter
             color: "black"
+        }
+
+        PropertyAnimation{
+            id:theRoundBallAnimation
+            target:itemRound
+            property: "rotation"
+            duration: 1000
         }
     }
 }

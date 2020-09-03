@@ -20,13 +20,18 @@ Rectangle {
     //Signal Handlers
 
     //When the value changes
+    /*
     onValueChanged: {
-        if (value < cautionMin || value > cautionMax ) {
-            gradientChangeableColor.color = "#FFC400"
-        } else{
-            gradientChangeableColor.color = "#3feee6"
+        if ((value < cautionMin || value > cautionMax) && gradientChangeableColor.color !== "#FFC400"){
+            gradientColorAnimation.to = "#FFC400"
+            gradientColorAnimation.start()
+        }else if((value >= cautionMin && value <= cautionMax) && gradientChangeableColor.color !== "#3feee6"){
+            gradientColorAnimation.to = "#3feee6"
+            gradientColorAnimation.start()
+        }else{
+            //Does nothing let's the colors the way they are
         }
-    }
+    }*/
 
     Rectangle {
         id: theHeaderRectangle
@@ -80,7 +85,6 @@ Rectangle {
         Component{
             id: theBodyRectangle
 
-
             Rectangle {
 
                 visible: false
@@ -94,7 +98,7 @@ Rectangle {
                     GradientStop {
                         id:gradientChangeableColor
                         position: 1
-                        color: (value < cautionMin || value > cautionMax ) ? "#FFC400" : "#3feee6"
+                        color: "#FFC400"
                     }
                 }
 
@@ -145,7 +149,7 @@ Rectangle {
                 Text {
                     id: info
                     height: 15
-                    text: qsTr("Status : Active         Caution Range     :  "+cautionMin+"-"+cautionMax+unit+" "+"Captive Capacity     :  " + captiveMin+"-"+captiveMax+unit+"        Station Id : " + station)
+                    text: qsTr("Status : Active   Caution Range  :  "+cautionMin+"-"+cautionMax+unit+"    "+"Captive Capacity  :  " + captiveMin+"-"+captiveMax+unit+"      Station Id  :  " + station)
                     anchors.bottomMargin: 10
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter

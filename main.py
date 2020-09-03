@@ -68,7 +68,7 @@ class Socket(QObject):
         """
         try:
             self.userPassword = password
-            sio.connect("https://airsim.herokuapp.com")
+            sio.connect("http://127.0.0.1:5000/")
         except Exception as e:
             print(f"{type(e)}, {e}")
             print("Error connecting to the server")
