@@ -5,7 +5,22 @@ import QtQml 2.0
 
 Page{
     id : page
+
+    //Properties
     property var initialJSON: null
+
+    //Functions
+
+    function findTheElement(sensorId, stationId){
+        for(var i = 0; i < sensorModel.count; ++i){
+                if (sensorModel.get(i).sensorTitle===sensorId && sensorModel.get(i).station){
+                    return sensorModel.get(i)
+                }
+            }
+        return null
+    }
+
+
     Rectangle{
         id:pageTitle
         width: parent.width
@@ -121,15 +136,12 @@ Page{
         target: socketFromPython
 
         onSignalToQML_Initial:{
+            //When initiating a connection.
             page.initialJSON = JSON.parse(initialFunction)
             roomTitle.text = page.initialJSON.id
-
             sensorModel.clear()
-
             page.initialJSON.stations.forEach(function(station){
-
                 station.sensors.forEach(function(sensor){
-
                     sensorModel.append({"sensorTitle": sensor.id,
                                         "captiveMinimum": sensor["Captive Range"].split("-")[0],
                                         "captiveMaximum": sensor["Captive Range"].split("-")[1],
@@ -141,6 +153,20 @@ Page{
                 })
             })
 
+        }
+
+        onSignalToQML_Data:{
+            //When updating data from station.
+            const data = JSON.parse(dataFecthFunction);
+            if (data.room===roomTitle.text){
+                data.sensors.forEach(function(sensor){
+                    const element = findTheElement(sensor.id, data.stationId)
+                    console.log(element)
+                    if (element){
+                        console.log("Reached HERREEEEEEEE")
+                    }
+                })
+            }
         }
     }
     Component.onCompleted: {

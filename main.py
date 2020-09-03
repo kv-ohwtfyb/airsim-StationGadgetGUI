@@ -24,7 +24,7 @@ class Socket(QObject):
         #The password of the current user
         self.userPassword = None
         #Contains the initial JSON file sent by the server
-        self.initialJSON = None
+        self.initialJSON = ""
         #True if the user was granted access to the user, else False
         self.initiated = False
         #This variabe contains the status of the connection to the database
@@ -81,7 +81,7 @@ class Socket(QObject):
         When asking to join a room in the server
         :return: None.
         """
-        sio.emit("join", {"password": f"{self.userPassword}", "room":"Room 01"})
+        sio.emit("join", {"password": f"{self.userPassword}", "room":"Kitchen"})
         self.signalToQML_Strings.emit("Sending the join request")
         self.statusVariable = "Sending the join request"
 
@@ -148,11 +148,14 @@ class Socket(QObject):
         :return: None.
         """
         try:
-            print(json.dumps(data, indent=2))
-            
+            self.treatedTheLatestData = False
+            self.latestData = json.dumps(data)
+            self.signalToQML_Data.emit(self.latestData)
         except Exception as e:
             print("Error receiving Data")
             print(e)
+            self.statusVariable="Error"
+            self.signalToQML_Strings.emit("Error")
 
 
 def runQML(socket):
