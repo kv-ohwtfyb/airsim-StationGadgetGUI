@@ -20,8 +20,8 @@ Rectangle {
     //Signal Handlers
 
     //When the value changes
-    /*
     onValueChanged: {
+        /*
         if ((value < cautionMin || value > cautionMax) && gradientChangeableColor.color !== "#FFC400"){
             gradientColorAnimation.to = "#FFC400"
             gradientColorAnimation.start()
@@ -30,8 +30,12 @@ Rectangle {
             gradientColorAnimation.start()
         }else{
             //Does nothing let's the colors the way they are
-        }
-    }*/
+        }*/
+
+        //Updates the last time that we received data from the server.
+        var date = new Date()
+        theLastActiveTime.text = String(date.toLocaleTimeString(Qt.locale("be_BE"), "HH:mm"))
+    }
 
     Rectangle {
         id: theHeaderRectangle
