@@ -102,7 +102,7 @@ Rectangle {
                     GradientStop {
                         id:gradientChangeableColor
                         position: 1
-                        color: "#FFC400"
+                        color: (value < cautionMin || value > cautionMax) ?  "#FFC400" : "#3feee6"
                     }
                 }
 

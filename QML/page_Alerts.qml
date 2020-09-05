@@ -19,7 +19,7 @@ Page{
             anchors.verticalCenter: parent.verticalCenter
 
             Text {
-                id:text1
+                id:roomTitle
                 text: qsTr("Room 01")
                 horizontalAlignment: Text.AlignHCenter
                 font.pointSize: 20
@@ -32,14 +32,14 @@ Page{
             Image {
                 id: homeIcon
                 width: 25; height: 25
-                source: "/new/prefix1/HomeIcon.png"
+                source: "HomeIcon.png"
                 anchors.left: parent.left
                 anchors.leftMargin: 44
                 anchors.verticalCenter: parent.verticalCenter
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        page.parent.replace("qrc:/page_MainMenu.qml")
+                        page.parent.replace("page_MainMenu.qml")
                     }
                 }
             }
@@ -52,6 +52,7 @@ Page{
                 anchors.rightMargin: 44
                 font.pointSize: 18
                 anchors.verticalCenter: parent.verticalCenter
+                color: "black"
 
                 Timer{
                     interval: 500
@@ -77,52 +78,6 @@ Page{
             sensor:"Humidity"
             data:"12%"
         }
-
-        ListElement{
-            date:"03 March 2020 17:23"
-            room:"Room 01"
-            sensor:"Humidity"
-            data:"16%"
-        }
-        ListElement{
-            date:"02 March 2020 17:21"
-            room:"Room 01"
-            sensor:"Humidity"
-            data:"12%"
-        }
-
-        ListElement{
-            date:"03 March 2020 17:23"
-            room:"Room 01"
-            sensor:"Humidity"
-            data:"16%"
-        }
-        ListElement{
-            date:"02 March 2020 17:21"
-            room:"Room 01"
-            sensor:"Humidity"
-            data:"12%"
-        }
-
-        ListElement{
-            date:"03 March 2020 17:23"
-            room:"Room 01"
-            sensor:"Humidity"
-            data:"16%"
-        }
-        ListElement{
-            date:"02 March 2020 17:21"
-            room:"Room 01"
-            sensor:"Humidity"
-            data:"12%"
-        }
-
-        ListElement{
-            date:"03 March 2020 17:23"
-            room:"Room 01"
-            sensor:"Humidity"
-            data:"16%"
-        }
     }
 
     TableView{
@@ -131,35 +86,39 @@ Page{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: pageTitle.bottom
         anchors.topMargin: 50
-
-        model:model
+        height: (parent.height/1.333)-50-refreshButton.height
+        model:page.parent.alertsModel
 
         TableViewColumn{
             role:"date"
             title:"Date"
-            width: parent.width/4
+            width: table.width/4-10
+            horizontalAlignment: Text.AlignHCenter
         }
         TableViewColumn{
             role:"room"
             title:"Room"
-            width: parent.width/4
+            width: table.width/4-10
+            horizontalAlignment: Text.AlignHCenter
         }
         TableViewColumn{
             role:"sensor"
             title:"Sensor"
-            width: parent.width/4
+            width: table.width/4-10
+            horizontalAlignment: Text.AlignHCenter
         }
         TableViewColumn{
             role:"data"
             title:"Data"
-            width: parent.width/4
+            width: parent.width/4-10
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 
     Rectangle {
         id: refreshButton
-        width: 77
-        height: 29
+        width: 80
+        height: 36
         color: "#55BCC9"
         anchors.top: table.bottom
         anchors.topMargin: 50
@@ -178,7 +137,7 @@ Page{
         MouseArea{
             anchors.fill:parent
             onClicked: {
-                model.clear()
+                page.parent.alertsModel.clear()
             }
         }
     }

@@ -66,6 +66,7 @@ Page{
                 anchors.rightMargin: 44
                 font.pointSize: 18
                 anchors.verticalCenter: parent.verticalCenter
+                color: "black"
 
                 Timer{
                     interval: 500
@@ -164,6 +165,16 @@ Page{
                     const elementNumber = findTheElement(sensor.id, data.stationId)
                     if (elementNumber !== null){
                         theRepeater.itemAt(elementNumber).value = sensor.data
+                        //Alerts managing
+                        const date = new Date()
+                        if (sensor.data<=parseFloat(theRepeater.itemAt(elementNumber).cautionMin)||sensor.data>=parseFloat(theRepeater.itemAt(elementNumber).cautionMax)){
+                            page.parent.alertsModel.append({"date":String(date.toLocaleDateString(Qt.locale("en_BE"), "dd-MM-yyyy")),
+                                                            "time":String(date.toLocaleTimeString(Qt.locale("be_BE"), "HH:mm")),
+                                                            "sensor":sensor.id,
+                                                            "data":String(sensor.data),
+                                                            "room":data.room
+                            })
+                        }
                     }
                 })
             }

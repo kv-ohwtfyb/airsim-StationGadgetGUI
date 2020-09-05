@@ -18,8 +18,11 @@ ApplicationWindow {
     }
 
     StackView {
-
         id: stackView
+
+        //Propreties
+        property ListModel alertsModel: ListModel{}
+
         initialItem: "page_Login.qml"
         anchors.fill: parent
     }
