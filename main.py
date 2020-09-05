@@ -129,7 +129,6 @@ class Socket(QObject):
         try:
             self.initialJSON = json.dumps(data)
             self.initiated = True
-            print(json.dumps(data, indent=2))
             self.signalToQML_Strings.emit("Received initial files")
             self.signalToQML_Initial.emit(self.initialJSON)
             self.statusVariable = "Received initial files"

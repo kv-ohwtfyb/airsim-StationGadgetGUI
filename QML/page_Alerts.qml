@@ -7,6 +7,9 @@ import QtQml 2.0
 Page{
     id: page
 
+    //Properties
+    property string pageName: "page_Alerts"
+
     Rectangle{
         id:pageTitle
         width: parent.width
@@ -92,25 +95,25 @@ Page{
         TableViewColumn{
             role:"date"
             title:"Date"
-            width: table.width/4-10
+            width: table.width/4
             horizontalAlignment: Text.AlignHCenter
         }
         TableViewColumn{
             role:"room"
             title:"Room"
-            width: table.width/4-10
+            width: table.width/4
             horizontalAlignment: Text.AlignHCenter
         }
         TableViewColumn{
             role:"sensor"
             title:"Sensor"
-            width: table.width/4-10
+            width: table.width/4
             horizontalAlignment: Text.AlignHCenter
         }
         TableViewColumn{
             role:"data"
             title:"Data"
-            width: parent.width/4-10
+            width: table.width/4
             horizontalAlignment: Text.AlignHCenter
         }
     }

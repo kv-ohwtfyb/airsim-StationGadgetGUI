@@ -8,17 +8,8 @@ Page{
 
     //Properties
     property var initialJSON: null
-
-    //Functions
-
-    function findTheElement(sensorId, stationId){
-        for(var i = 0; i < sensorModel.count; ++i){
-                if (sensorModel.get(i).sensorTitle===sensorId && sensorModel.get(i).stationId){
-                    return i
-                }
-            }
-        return null
-    }
+    property string pageName: "page_DataDisplay"
+    property alias theRepeater: theRepeater
 
 
     Rectangle{
@@ -83,20 +74,6 @@ Page{
         }
     }
 
-    ListModel{
-        id:sensorModel
-        /*
-        ListElement{
-            sensorTitle:"Temperature"
-            customNumber:12
-            captiveMinimum:-1
-            captiveMaximum:100
-            cautionMinimum:35
-            cautionMaximum:70
-            stationId:"StationId"
-        } */
-    }
-
     Flickable{
         anchors.top: pageTitle.bottom
         anchors.topMargin: 50
@@ -119,7 +96,7 @@ Page{
 
             Repeater{
                 id:theRepeater
-                model: sensorModel
+                model: page.parent.sensorModel
                 delegate: RectangleDisplay{
                     value:customNumber
                     title:sensorTitle
@@ -134,54 +111,11 @@ Page{
         }
     }
 
-    Connections{
-        target: socketFromPython
-
-        onSignalToQML_Initial:{
-            //When initiating a connection.
-            page.initialJSON = JSON.parse(initialFunction)
-            roomTitle.text = page.initialJSON.id
-            sensorModel.clear()
-            page.initialJSON.stations.forEach(function(station){
-                station.sensors.forEach(function(sensor){
-                    sensorModel.append({"sensorTitle": sensor.id,
-                                        "captiveMinimum": sensor["Captive Range"].split("-")[0],
-                                        "captiveMaximum": sensor["Captive Range"].split("-")[1],
-                                        "cautionMinimum": sensor["Caution Range"].split("-")[0],
-                                        "cautionMaximum": sensor["Caution Range"].split("-")[1],
-                                        "stationId":station.id,
-                                        "SensorUnit":sensor.Unit,
-                                        "customNumber": parseFloat(sensor["Captive Range"].split("-")[0])
-                                       })
-                })
-            })
-        }
-
-        onSignalToQML_Data:{
-            //When updating data from station.
-            const data = JSON.parse(dataFecthFunction);
-            if (data.room===roomTitle.text){
-                data.sensors.forEach(function(sensor){
-                    const elementNumber = findTheElement(sensor.id, data.stationId)
-                    if (elementNumber !== null){
-                        theRepeater.itemAt(elementNumber).value = sensor.data
-                        //Alerts managing
-                        const date = new Date()
-                        if (sensor.data<=parseFloat(theRepeater.itemAt(elementNumber).cautionMin)||sensor.data>=parseFloat(theRepeater.itemAt(elementNumber).cautionMax)){
-                            page.parent.alertsModel.append({"date":String(date.toLocaleDateString(Qt.locale("en_BE"), "dd-MM-yyyy")),
-                                                            "time":String(date.toLocaleTimeString(Qt.locale("be_BE"), "HH:mm")),
-                                                            "sensor":sensor.id,
-                                                            "data":String(sensor.data),
-                                                            "room":data.room
-                            })
-                        }
-                    }
-                })
-            }
-        }
-    }
     Component.onCompleted: {
-        socketFromPython.initialFunction()
+        if (page.parent.initialJSON){
+            const initialJSON = page.parent.initialJSON
+            roomTitle.text=initialJSON.id
+        }
     }
 }
 

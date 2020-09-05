@@ -5,6 +5,9 @@ import QtQuick.Layouts 1.3
 Page{
     id: page
 
+    //Properties
+    property string pageName: "page_Configurations"
+
     Rectangle{
         id:pageTitle
         width: parent.width
@@ -17,7 +20,7 @@ Page{
             anchors.verticalCenter: parent.verticalCenter
 
             Text {
-                id:text1
+                id:roomTitle
                 text: qsTr("Room 01")
                 horizontalAlignment: Text.AlignHCenter
                 font.pointSize: 20
@@ -30,14 +33,14 @@ Page{
             Image {
                 id: homeIcon
                 width: 25; height: 25
-                source: "/new/prefix1/HomeIcon.png"
+                source: "HomeIcon.png"
                 anchors.left: parent.left
                 anchors.leftMargin: 44
                 anchors.verticalCenter: parent.verticalCenter
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
-                        //page.parent.replace("qrc:/page_MainMenu.qml")
+                        page.parent.replace("page_MainMenu.qml")
                     }
                 }
             }
@@ -50,6 +53,7 @@ Page{
                 anchors.rightMargin: 44
                 font.pointSize: 18
                 anchors.verticalCenter: parent.verticalCenter
+                color: "black"
 
                 Timer{
                     interval: 500
@@ -131,8 +135,8 @@ Page{
 
     Rectangle {
         id: saveButton
-        width: 164
-        height: 56
+        width: 80
+        height: 36
         color: "#55BCC9"
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 50
@@ -140,10 +144,9 @@ Page{
 
         Text {
             id: name
-            width: 164
-            height: 56
+            anchors.fill: parent
             text: qsTr("Save")
-            font.pointSize: 44
+            font.pointSize: 24
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignHCenter
