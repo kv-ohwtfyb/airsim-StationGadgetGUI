@@ -13,6 +13,7 @@ Rectangle {
     property int cautionMin: 0
     property string station: "value"
     property string unit: "°C"
+    property string lastActiveTime: "Undefined"
 
     width : 585
     height: 298
@@ -33,8 +34,6 @@ Rectangle {
         }*/
 
         //Updates the last time that we received data from the server.
-        var date = new Date()
-        theLastActiveTime.text = String(date.toLocaleTimeString(Qt.locale("be_BE"), "HH:mm"))
     }
 
     Rectangle {
@@ -70,10 +69,10 @@ Rectangle {
             width: 34
             height: 15
             color: "#00ff4e"
-            text: qsTr("12:10")
+            text: lastActiveTime
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: theHeaderRectangle.right
-            anchors.rightMargin: 20
+            anchors.rightMargin: 40
             font.pixelSize: 12
         }
     }

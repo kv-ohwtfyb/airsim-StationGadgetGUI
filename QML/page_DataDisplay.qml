@@ -106,6 +106,7 @@ Page{
                     cautionMin: cautionMinimum
                     station: stationId
                     unit:SensorUnit
+                    lastActiveTime: lastTime
                 }
             }
         }

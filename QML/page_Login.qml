@@ -82,14 +82,14 @@ Page {
             id : busyIndicatorId
             width: parent.width
             anchors.top: loginButton.bottom
-            anchors.topMargin: 20
+            anchors.topMargin: 10
             running: false
         }
 
         Text {
             id: statusText
             anchors.top: busyIndicatorId.bottom
-            anchors.topMargin: 30
+            anchors.topMargin: 10
             text: qsTr("")
             font.pointSize: 14
             font.family: "Helvetica Neue"

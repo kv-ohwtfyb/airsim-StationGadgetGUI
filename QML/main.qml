@@ -52,7 +52,8 @@ ApplicationWindow {
                                         "cautionMaximum": sensor["Caution Range"].split("-")[1],
                                         "stationId":station.id,
                                         "SensorUnit":sensor.Unit,
-                                        "customNumber": parseFloat(sensor["Captive Range"].split("-")[0])
+                                        "customNumber": parseFloat(sensor["Captive Range"].split("-")[0]),
+                                        "lastTime":"Undefined"
                     })
                 })
             })
@@ -67,12 +68,14 @@ ApplicationWindow {
 
                     //If the sensor exists
                     if (elementNumber !== null){
+                        const date = new Date()
                         //Updates the value in the sensorModel
                         mainStackView.sensorModel.setProperty(elementNumber,"customNumber",sensor.data)
+                        mainStackView.sensorModel.setProperty(elementNumber,"lastTime",String(date.toLocaleTimeString(Qt.locale("be_BE"), "HH:mm")))
 
                         //Alerts managing
                         if (sensor.data<=parseFloat(mainStackView.sensorModel.get(elementNumber).cautionMinimum)||sensor.data>=parseFloat(mainStackView.sensorModel.get(elementNumber).cautionMaximum)){
-                            const date = new Date()
+
                             mainStackView.alertsModel.append({"date":String(date.toLocaleDateString(Qt.locale("en_BE"), "dd-MM-yyyy")),
                                                             "time":String(date.toLocaleTimeString(Qt.locale("be_BE"), "HH:mm")),
                                                             "sensor":sensor.id,

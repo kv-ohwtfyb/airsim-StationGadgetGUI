@@ -123,8 +123,8 @@ Page{
         width: 80
         height: 36
         color: "#55BCC9"
-        anchors.top: table.bottom
-        anchors.topMargin: 50
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 25
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {

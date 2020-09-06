@@ -77,27 +77,31 @@ Page{
         Rectangle {
             id: wrapItem
             width:parent.width-80
-            height: 135
+            height: 80
             color: "#55BCC9"
             anchors.horizontalCenter: parent.horizontalCenter
 
             Text {
                 id: sensorName
                 text: sensor
+                width:180
                 anchors.left: parent.left
                 anchors.leftMargin: 16
-                font.pointSize: 30
+                font.pointSize: 16
                 anchors.verticalCenter: parent.verticalCenter
             }
 
             Item {
                 id: doubleSliderWrapper
-                width: 800
+                width: parent.width-sensorName.width
                 height: parent.height
                 anchors.right: parent.right
 
                 RectangleDoubleSlider{
-                    y:30
+                    id:theSlider
+                    anchors.fill:parent
+                    anchors.top:parent.top
+                    anchors.topMargin: 10
                 }
             }
         }
@@ -126,10 +130,9 @@ Page{
         ListView {
 
             model: model
-            width: parent.width-40;
-            spacing: 20
-
+            width: parent.width;
             delegate: customDelegate
+            spacing: 20
         }
     }
 
@@ -139,7 +142,7 @@ Page{
         height: 36
         color: "#55BCC9"
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 50
+        anchors.bottomMargin: 25
         anchors.horizontalCenter: parent.horizontalCenter
 
         Text {

@@ -9,12 +9,12 @@ Item{
 
     ColumnLayout {
 
-        property int mWidth: 700
-        property int mHeight: 60
+        property int mWidth: 520
+        property int mHeight: 30
 
         id:theLayout
         width: mWidth; height: mHeight
-        spacing: 10
+        spacing: 18
 
         Rectangle{
             width: parent.width-40
@@ -25,7 +25,7 @@ Item{
 
             Rectangle{
                 id:firstValueWrapRectangle
-                width: parent.height*2.1; height:width
+                width:height ; height:parent.height*4
                 color: "transparent"
                 x:rangeSlider.first.value*parent.width - firstValueWrapRectangle.width/2
 
@@ -65,7 +65,7 @@ Item{
 
             Rectangle{
                 id:secondValueWrapRectangle
-                width: parent.height*2.1; height:width
+                width:height ; height:parent.height*4
                 color: "transparent"
                 x:rangeSlider.second.value*parent.width - secondValueRectangle.width/2
 
@@ -111,7 +111,7 @@ Item{
             second.value: 0.75
             first.value: 0.25
             Layout.fillWidth: true
-            height: 20
+            height: 10
         }
     }
 }
@@ -120,6 +120,6 @@ Item{
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}
+    D{i:0;autoSize:true;height:480;width:800}
 }
 ##^##*/
