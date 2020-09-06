@@ -4,12 +4,12 @@ import QtQuick.Window 2.2
 
 ApplicationWindow {
     id: window
-    width: 1280
-    height: 800
+    width: 800
+    height: 480
     visible: true
     title: qsTr("AirSim")
     minimumHeight: 800
-    minimumWidth: 1280
+    minimumWidth: 480
     //visibility : "FullScreen"
 
     //Functions

@@ -91,7 +91,7 @@ Page{
         Grid{
             id:theWidgetsGridView
             anchors.horizontalCenter: parent.horizontalCenter
-            columns: 2
+            columns: 1
             spacing: 20
 
             Repeater{

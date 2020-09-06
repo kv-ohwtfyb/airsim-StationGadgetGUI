@@ -188,12 +188,8 @@ Rectangle {
     }
 }
 
-
-
-
-
 /*##^##
 Designer {
-    D{i:4;anchors_x:566}D{i:9;anchors_x:38}D{i:5;anchors_y:43}
+    D{i:0;autoSize:true;height:480;width:800}
 }
 ##^##*/

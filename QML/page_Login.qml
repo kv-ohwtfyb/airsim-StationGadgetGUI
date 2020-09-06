@@ -6,8 +6,8 @@ Page {
 
     Rectangle{
         id:theRectangle
-        width: 500
-        height: 678
+        width: 280
+        height: 400
         color: "#3FEEE6"
 
         anchors.centerIn: parent
@@ -15,10 +15,10 @@ Page {
         Label{
             id:airsimLabel
             anchors.top: parent.top
-            anchors.topMargin: 130
+            anchors.topMargin: 70
             anchors.horizontalCenter: parent.horizontalCenter
             text: "Airsim - Login"
-            font.pointSize: 34
+            font.pointSize: 24
             font.family: "Helvetica Neue"
             font.bold: true
         }
@@ -26,16 +26,16 @@ Page {
         Rectangle{
             id:thePassInputRectangle
             anchors.top: airsimLabel.bottom
-            anchors.topMargin: 100
+            anchors.topMargin: 60
             anchors.horizontalCenter: parent.horizontalCenter
-            width:308
-            height: 46
+            width:parent.width/1.5
+            height: 30
             color: "white"
             anchors.horizontalCenterOffset: 0
 
             TextInput{
                 id:thePassInput
-                width: parent.width
+                width: 274
                 height: parent.height
                 anchors.fill: parent.fill
                 font.pointSize: 28
@@ -64,10 +64,10 @@ Page {
             anchors.top: thePassInputRectangle.bottom
             anchors.topMargin: 76
             anchors.horizontalCenter: parent.horizontalCenter
-            width: 98
-            height: 36
+            width: 60
+            height: 30
             text: "Login"
-            font.pointSize: 24
+            font.pointSize: 16
             background: Rectangle{
                 anchors.fill: parent
                 color: "#CAFAFE"
@@ -82,7 +82,7 @@ Page {
             id : busyIndicatorId
             width: parent.width
             anchors.top: loginButton.bottom
-            anchors.topMargin: 50
+            anchors.topMargin: 20
             running: false
         }
 
@@ -101,6 +101,6 @@ Page {
 
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:800;width:1280}
+    D{i:0;autoSize:true;height:480;width:800}
 }
 ##^##*/
