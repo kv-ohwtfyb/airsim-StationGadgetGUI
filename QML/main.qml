@@ -53,7 +53,7 @@ ApplicationWindow {
                                         "stationId":station.id,
                                         "SensorUnit":sensor.Unit,
                                         "customNumber": parseFloat(sensor["Captive Range"].split("-")[0]),
-                                        "lastTime":"Undefined"
+                                        "lastTime":"Unkown"
                     })
                 })
             })

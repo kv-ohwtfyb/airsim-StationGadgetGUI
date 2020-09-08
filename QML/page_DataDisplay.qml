@@ -76,10 +76,10 @@ Page{
 
     Flickable{
         anchors.top: pageTitle.bottom
-        anchors.topMargin: 50
+        anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 50
+        anchors.bottomMargin: 20
         height: parent.height-pageTitle.height-100
         width: parent.width
 
@@ -91,7 +91,7 @@ Page{
         Grid{
             id:theWidgetsGridView
             anchors.horizontalCenter: parent.horizontalCenter
-            columns: 1
+            columns: 2
             spacing: 20
 
             Repeater{

@@ -6,6 +6,11 @@ import QtQuick.Layouts 1.3
 Item{
     property alias theWidth: theLayout.mWidth
     property alias theHeight: theLayout.mHeight
+    property real firstValue: 0.25
+    property real secondValue: 0.75
+    property real max: 1
+    property real min: 0
+
 
     ColumnLayout {
 
@@ -39,7 +44,7 @@ Item{
                     Text {
                         id: firstValueRectangleText
                         color: "white"
-                        text: String(rangeSlider.first.value).substring(0,4)
+                        text: String(rangeSlider.first.value * (max-min)).substring(0,4)
                         font.pointSize: parent.width/2
                         anchors.centerIn: parent
                     }
@@ -81,7 +86,7 @@ Item{
                     Text {
                         id: secondValueRectangleText
                         color: "white"
-                        text: String(rangeSlider.second.value).substring(0,4)
+                        text: String(rangeSlider.second.value * (max-min)).substring(0,4)
                         font.pointSize: parent.width/2
                         anchors.centerIn: parent
                     }
@@ -108,8 +113,8 @@ Item{
         RangeSlider {
             id: rangeSlider
             width: parent.width
-            second.value: 0.75
-            first.value: 0.25
+            second.value: secondValue
+            first.value: firstValue
             Layout.fillWidth: true
             height: 10
         }

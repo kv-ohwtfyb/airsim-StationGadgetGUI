@@ -15,8 +15,11 @@ Rectangle {
     property string unit: "°C"
     property string lastActiveTime: "Undefined"
 
-    width : 585
-    height: 298
+    //width : 585
+    //height: 298
+
+    width:380
+    height:194
 
     //Signal Handlers
 
@@ -72,7 +75,7 @@ Rectangle {
             text: lastActiveTime
             anchors.verticalCenter: parent.verticalCenter
             anchors.right: theHeaderRectangle.right
-            anchors.rightMargin: 40
+            anchors.rightMargin: 20
             font.pixelSize: 12
         }
     }
@@ -107,12 +110,12 @@ Rectangle {
 
                 Button {
                     id: refreshButton
-                    width: 77
-                    height: 29
+                    width: 60
+                    height: 24
                     text: qsTr("Refresh")
+                    font.pointSize: 12
                     anchors.left: parent.left
-                    anchors.leftMargin: 48
-                    anchors.verticalCenterOffset: -19
+                    anchors.leftMargin: 24
                     anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         anchors.fill: parent
@@ -132,12 +135,12 @@ Rectangle {
 
                 Button {
                     id: historyButton
-                    width: 77
-                    height: 29
+                    width: 60
+                    height: 24
                     text: qsTr("History")
+                    font.pointSize: 12
                     anchors.right: parent.right
-                    anchors.rightMargin: 48
-                    anchors.verticalCenterOffset: 0
+                    anchors.rightMargin: 24
                     anchors.verticalCenter: refreshButton.verticalCenter
                     background: Rectangle{
                         anchors.fill: parent
@@ -151,12 +154,15 @@ Rectangle {
                 //This text has to be turned into a Row Layout that way the text can always fillthe parent width
                 Text {
                     id: info
+                    width: parent.width
                     height: 15
                     text: qsTr("Status : Active   Caution Range  :  "+cautionMin+"-"+cautionMax+unit+"    "+"Captive Capacity  :  " + captiveMin+"-"+captiveMax+unit+"      Station Id  :  " + station)
                     anchors.bottomMargin: 10
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.pixelSize: 10
+                    font.pixelSize: 7
+                    font.bold: true
+                    horizontalAlignment: Text.AlignHCenter
                 }
             }
         }
@@ -187,8 +193,4 @@ Rectangle {
     }
 }
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:800}
-}
-##^##*/
+

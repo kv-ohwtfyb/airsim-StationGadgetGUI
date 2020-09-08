@@ -15,7 +15,7 @@ Shape {
         theRoundBallAnimation.start()
     }
 
-    width: 200
+    width: 100 //200
     height: width
 
     layer.enabled: true

@@ -83,7 +83,7 @@ Page{
 
             Text {
                 id: sensorName
-                text: sensor
+                text: sensorTitle
                 width:180
                 anchors.left: parent.left
                 anchors.leftMargin: 16
@@ -102,22 +102,12 @@ Page{
                     anchors.fill:parent
                     anchors.top:parent.top
                     anchors.topMargin: 10
+                    secondValue:(1/(captiveMaximum - captiveMinimum))*cautionMaximum
+                    firstValue:(1/(captiveMaximum - captiveMinimum))*cautionMinimum
+                    max:captiveMaximum
+                    min:captiveMinimum
                 }
             }
-        }
-    }
-
-    ListModel{
-        // THis is kinda like a DB, but not actually
-        id:model
-        ListElement{
-            sensor:"Room Temperature"
-        }
-        ListElement{
-            sensor:"Room Humidity"
-        }
-        ListElement{
-            sensor:"Room Oxygen"
         }
     }
 
@@ -129,7 +119,7 @@ Page{
 
         ListView {
 
-            model: model
+            model: page.parent.sensorModel
             width: parent.width;
             delegate: customDelegate
             spacing: 20
