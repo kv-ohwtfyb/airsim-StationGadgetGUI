@@ -100,10 +100,10 @@ Page{
                 delegate: RectangleDisplay{
                     value:customNumber
                     title:sensorTitle
-                    captiveMax: captiveMaximum
-                    captiveMin: captiveMinimum
-                    cautionMax: cautionMaximum
-                    cautionMin: cautionMinimum
+                    captiveMax: parseFloat(captiveMaximum)
+                    captiveMin: parseFloat(captiveMinimum)
+                    cautionMax: parseFloat(cautionMaximum)
+                    cautionMin: parseFloat(cautionMinimum)
                     station: stationId
                     unit:SensorUnit
                     lastActiveTime: lastTime

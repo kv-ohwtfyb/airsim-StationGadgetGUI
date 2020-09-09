@@ -51,10 +51,10 @@ Page {
 
                 onSignalToQML_Strings:{
                     statusText.text = statusFunction
-                    if (statusFunction == "Error" || statusFunction == "Request denied by the server") {
+                    if (statusText.text === "Error" || statusText.text === "Request denied by the server") {
                         busyIndicatorId.running = false
                     }
-                    if (statusFunction == "Received initial files"){
+                    if (statusFunction === "Received initial files"){
                         page.parent.push("page_DataDisplay.qml")
                     }
                 }
@@ -73,8 +73,12 @@ Page {
                 color: "#CAFAFE"
             }
             onClicked: {
-                socketFromPython.start(thePassInput.text)
-                busyIndicatorId.running = true
+                if (thePassInput.text.length>0){
+                    socketFromPython.start(thePassInput.text)
+                    busyIndicatorId.running = true
+                }else{
+                    statusText.text = "Please enter your password"
+                }
             }
         }
 

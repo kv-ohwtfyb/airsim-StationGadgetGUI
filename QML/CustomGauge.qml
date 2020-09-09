@@ -4,11 +4,11 @@ import QtQuick.Shapes 1.14
 
 Shape {
     id:shape
-    property int value: 30
-    property int captiveMax: 100
-    property int captiveMin: -100
-    property int cautionMax: 70
-    property int cautionMin: 0    
+    property real value: 30
+    property real captiveMax: 100
+    property real captiveMin: -100
+    property real cautionMax: 70
+    property real cautionMin: 0
 
     onValueChanged: {
         theRoundBallAnimation.to = 225 + ((shape.value-captiveMin) * (270 / (shape.captiveMax-shape.captiveMin)))

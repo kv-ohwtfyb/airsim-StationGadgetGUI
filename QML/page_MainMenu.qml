@@ -21,7 +21,7 @@ Page {
 
         Column{
 
-            width: parent.width-40;
+            width: parent.width-40 - logoutButton.height;
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.centerIn: parent
             spacing: 20
@@ -69,6 +69,23 @@ Page {
                 onClicked: {
                     page.parent.replace("page_Configurations.qml")
                 }
+            }
+        }
+        Button{
+            id:logoutButton
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: parent.width; height:30
+            text: "Logout"
+            font.pointSize: 12
+            background: Rectangle {
+                color: "#CAFAFE" //#CAFAFE //#FC4445
+            }
+            onClicked: {
+                page.parent.sensorModel.clear()
+                page.parent.alertsModel.clear()
+                page.parent.initialJSON = null
+                page.parent.replace("page_Login.qml")
             }
         }
     }

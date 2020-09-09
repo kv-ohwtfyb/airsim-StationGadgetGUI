@@ -6,11 +6,11 @@ Rectangle {
     id:bigBoss
 
     property string title: "Sensor"
-    property int value: 00
-    property int captiveMax: 0
-    property int captiveMin: 0
-    property int cautionMax: 0
-    property int cautionMin: 0
+    property real value: 00
+    property real captiveMax: 0
+    property real captiveMin: 0
+    property real cautionMax: 0
+    property real cautionMin: 0
     property string station: "value"
     property string unit: "°C"
     property string lastActiveTime: "Undefined"
@@ -163,6 +163,7 @@ Rectangle {
                     font.pixelSize: 7
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
                 }
             }
         }

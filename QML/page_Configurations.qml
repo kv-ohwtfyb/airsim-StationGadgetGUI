@@ -71,7 +71,7 @@ Page{
     }
 
     Component{
-        // This wraps how the data will be seen in the ListView.
+        // This wraps how the Component that will be seen in the ListView.
         id:customDelegate
 
         Rectangle {
@@ -80,6 +80,11 @@ Page{
             height: 80
             color: "#55BCC9"
             anchors.horizontalCenter: parent.horizontalCenter
+
+            property var theStation: stationId
+            property var theSensorTitle: sensorTitle
+            property var actualFirst: theSlider.actualFirstValue
+            property var actualSecond: theSlider.actualSecondValue
 
             Text {
                 id: sensorName
@@ -106,6 +111,7 @@ Page{
                     firstValue:(1/(captiveMaximum - captiveMinimum))*cautionMinimum
                     max:captiveMaximum
                     min:captiveMinimum
+                    stationIdName: stationId
                 }
             }
         }
@@ -118,7 +124,7 @@ Page{
         width: parent.width; height: parent.height-pageTitle.height-90-saveButton.height
 
         ListView {
-
+            id:configurationListView
             model: page.parent.sensorModel
             width: parent.width;
             delegate: customDelegate
@@ -146,6 +152,17 @@ Page{
         }
         MouseArea{
             anchors.fill:parent
+            onClicked: {
+                    for(var i = 0; i < configurationListView.count; ++i){
+                        const element = configurationListView.itemAtIndex(i)
+                        if(element){
+                            const index = page.parent.findTheElement(element.theSensorTitle,element.theStation)
+                            page.parent.sensorModel.setProperty(index,"cautionMinimum",String(element.actualFirst))
+                            page.parent.sensorModel.setProperty(index,"cautionMaximum",String(element.actualSecond))
+                    }
+                }
+                    page.parent.replace("page_DataDisplay.qml")
+            }
         }
     }
 }

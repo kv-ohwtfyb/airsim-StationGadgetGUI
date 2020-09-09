@@ -10,6 +10,9 @@ Item{
     property real secondValue: 0.75
     property real max: 1
     property real min: 0
+    property real actualFirstValue: (rangeSlider.first.value * (max-min)).toFixed(2)
+    property real actualSecondValue: (rangeSlider.second.value * (max-min)).toFixed(2)
+    property var stationIdName: "value"
 
 
     ColumnLayout {

@@ -8,28 +8,35 @@ ApplicationWindow {
     height: 480
     visible: true
     title: qsTr("AirSim")
-    minimumHeight: 800
-    minimumWidth: 480
+    minimumWidth: 800
+    maximumWidth:800
+    minimumHeight: 480
+    maximumHeight: 480
+
     //visibility : "FullScreen"
 
-    //Functions
-    function findTheElement(sensorId, stationId){
-        for(var i = 0; i < mainStackView.sensorModel.count; ++i){
-                if (mainStackView.sensorModel.get(i).sensorTitle===sensorId && mainStackView.sensorModel.get(i).stationId){
-                    return i
-                }
-            }
-        return null
-    }
+
 
 
     StackView {
         id: mainStackView
 
         //Propreties
+
         property ListModel alertsModel: ListModel{}
         property ListModel sensorModel: ListModel{}
         property var initialJSON: null
+
+        //Functions
+        function findTheElement(sensorId, stationId){
+            for(var i = 0; i < mainStackView.sensorModel.count; ++i){
+                    if (mainStackView.sensorModel.get(i).sensorTitle===sensorId && mainStackView.sensorModel.get(i).stationId){
+                        return i
+                    }
+                }
+            return null
+        }
+
 
         initialItem: "page_Login.qml"
         anchors.fill: parent
@@ -64,7 +71,7 @@ ApplicationWindow {
             const data = JSON.parse(dataFecthFunction);
             if (data.room===mainStackView.initialJSON.id){
                 data.sensors.forEach(function(sensor){
-                    const elementNumber = findTheElement(sensor.id, data.stationId)
+                    const elementNumber = mainStackView.findTheElement(sensor.id, data.stationId)
 
                     //If the sensor exists
                     if (elementNumber !== null){

@@ -150,11 +150,8 @@ class Socket(QObject):
             self.treatedTheLatestData = False
             self.latestData = json.dumps(data)
             self.signalToQML_Data.emit(self.latestData)
-        except Exception as e:
-            print("Error receiving Data")
-            print(e)
-            self.statusVariable="Error"
-            self.signalToQML_Strings.emit("Error")
+        except RuntimeError:
+            quit()
 
 
 def runQML(socket):
@@ -169,11 +166,17 @@ def runQML(socket):
     engine.load('./QML/main.qml')
     engine.quit.connect(app.quit)
 
-    if not engine.rootObjects():
-        return -1
-    return app.exec_()
+    try:
+        if not engine.rootObjects():
+            return -1
+        return app.exec_()
+    except RuntimeError:
+        quit()
 
 
 if __name__ == "__main__":
     socket = Socket(sio)
-    sys.exit(runQML(socket))
+    try:
+        sys.exit(runQML(socket))
+    except RuntimeError:
+        quit()
