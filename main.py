@@ -1,6 +1,7 @@
 from PyQt5.QtQml import QQmlApplicationEngine, QJSValue
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, QVariant
+from PyQt5.QtGui import QIcon
 import sys
 import socketio
 import json
@@ -151,7 +152,7 @@ class Socket(QObject):
             self.latestData = json.dumps(data)
             self.signalToQML_Data.emit(self.latestData)
         except RuntimeError:
-            quit()
+            sio.disconnect()
 
 
 def runQML(socket):
@@ -161,6 +162,7 @@ def runQML(socket):
     :return: an execution command.
     """
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon('icon.ico'))
     engine = QQmlApplicationEngine()
     engine.rootContext().setContextProperty("socketFromPython", socket)
     engine.load('./QML/main.qml')
@@ -171,12 +173,8 @@ def runQML(socket):
             return -1
         return app.exec_()
     except RuntimeError:
-        quit()
-
+        sys.exit()
 
 if __name__ == "__main__":
     socket = Socket(sio)
-    try:
-        sys.exit(runQML(socket))
-    except RuntimeError:
-        quit()
+    sys.exit(runQML(socket))
