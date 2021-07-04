@@ -15,4 +15,4 @@ This UI is coded in QML (Qt Modelling Language), JavaScript and using Python.
 
 ## Run 
 
-To run the program open CMD and type ``python main.py`` and when asked to input the data type ``vany``.
+To run the program open CMD and type ``python main.py`` and when asked to input password type in ``vany``.
